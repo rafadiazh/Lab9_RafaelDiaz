@@ -57,8 +57,8 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
         medad = new javax.swing.JTextField();
         mnumero = new javax.swing.JTextField();
         mcorreo = new javax.swing.JTextField();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        m = new javax.swing.JRadioButton();
+        f = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -206,18 +206,18 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Nuevo Contacto", jPanel1);
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jRadioButton3.setText("Masculino");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(m);
+        m.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        m.setText("Masculino");
+        m.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
+                mActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jRadioButton4.setText("Femenino");
+        buttonGroup1.add(f);
+        f.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        f.setText("Femenino");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setText("Sexo");
@@ -283,9 +283,9 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jRadioButton3)
+                                .addComponent(m)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton4)))
+                                .addComponent(f)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -347,8 +347,8 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
+                    .addComponent(m)
+                    .addComponent(f))
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(16, 16, 16))
@@ -358,6 +358,11 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jButton3.setText("ELIMINAR");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -481,9 +486,9 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_masculinoActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    private void mActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
+    }//GEN-LAST:event_mActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -596,13 +601,19 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     }//GEN-LAST:event_modconActionPerformed
 
     private void modconItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_modconItemStateChanged
-        
-        
-        
+        if (modcon.getSelectedIndex()>=0) {
+        DefaultComboBoxModel modelo  = (DefaultComboBoxModel) modcon.getModel();
+        mnombre.setText(((Contactos)modelo.getSelectedItem()).getNombre());
+        medad.setText(Integer.toString(((Contactos)modelo.getSelectedItem()).getEdad()));
+        mnumero.setText(((Contactos)modelo.getSelectedItem()).getNumerotelefonico());
+        mcorreo.setText(((Contactos)modelo.getSelectedItem()).getCorreoelectronico());
+        mdireccion.setText(((Contactos)modelo.getSelectedItem()).getDireccion());
+        }   
     }//GEN-LAST:event_modconItemStateChanged
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        DefaultComboBoxModel modelo  = (DefaultComboBoxModel) modcon.getModel();
+        try {
+           DefaultComboBoxModel modelo  = (DefaultComboBoxModel) modcon.getModel();
         modelo.removeAllElements();
         if (modelo.getSize()==0) {
             
@@ -611,7 +622,11 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
         for (int i = 0; i < aa.getContactos().size(); i++) {
             modelo.addElement(aa.getContactos().get(i));
         }
+        } 
+        } catch (Exception e) {
         }
+        
+        
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
@@ -628,12 +643,26 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        AdminAgenda aa = new AdminAgenda("./contacto.cbm");
+        aa.cargarArchivo();
         DefaultComboBoxModel modelo  = (DefaultComboBoxModel) modcon.getModel();
-        mnombre.setText(((Contactos)modelo.getSelectedItem()).getNombre());
-        medad.setText(Integer.toString(((Contactos)modelo.getSelectedItem()).getEdad()));
-        mnumero.setText(((Contactos)modelo.getSelectedItem()).getNumerotelefonico());
-        mcorreo.setText(((Contactos)modelo.getSelectedItem()).getCorreoelectronico());
-        mdireccion.setText(((Contactos)modelo.getSelectedItem()).getDireccion());
+        String s="";
+        if (m.isSelected()) {
+            s = "M";
+            ((Contactos)modelo.getSelectedItem()).setSexo(s);
+        }
+        if (f.isSelected()) {
+            s = "F";
+            ((Contactos)modelo.getSelectedItem()).setSexo(s);
+        }
+        Contactos c = (Contactos) modelo.getSelectedItem();
+        aa.getContactos().set(modcon.getSelectedIndex(), new Contactos(mnombre.getText(),Integer.parseInt(medad.getText()),
+                mnumero.getText(),mcorreo.getText(),mdireccion.getText(),s));
+        
+       
+        
+        aa.escribirArchivo();
+        
         
         mnombre.setText("");
         medad.setText("");
@@ -641,6 +670,15 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
         mcorreo.setText("");
         mdireccion.setText("");
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        DefaultComboBoxModel modelo  = (DefaultComboBoxModel) elim.getModel();
+        AdminAgenda aa = new AdminAgenda("./contacto.cbm");
+        aa.cargarArchivo();
+        aa.getContactos().remove(elim.getSelectedIndex());
+        aa.escribirArchivo();
+        
+    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -685,6 +723,7 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     private javax.swing.JTextArea direccion;
     private javax.swing.JTextField edad;
     private javax.swing.JComboBox<Contactos> elim;
+    private javax.swing.JRadioButton f;
     private javax.swing.JRadioButton femenino;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -711,12 +750,11 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JRadioButton m;
     private javax.swing.JRadioButton masculino;
     private javax.swing.JTextField mcorreo;
     private javax.swing.JTextArea mdireccion;
