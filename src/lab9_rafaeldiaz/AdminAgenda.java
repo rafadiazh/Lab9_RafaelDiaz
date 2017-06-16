@@ -19,10 +19,10 @@ import java.util.ArrayList;
  */
 public class AdminAgenda {
     ArrayList<Contactos> contactos = new ArrayList();
-    File archivo;
+    File archivo=null;
 
-    public AdminAgenda(File archivo) {
-        this.archivo = archivo;
+    public AdminAgenda(String path) {
+        archivo=new File(path);
     }
 
     public ArrayList<Contactos> getContactos() {

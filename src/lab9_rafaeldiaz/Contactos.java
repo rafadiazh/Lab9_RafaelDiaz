@@ -19,14 +19,17 @@ public class Contactos implements Serializable{
     int edad;
     String numerotelefonico;
     String correoelectronico,direccion;
+    String sexo;
 
-    public Contactos(String nombre, int edad, String numerotelefonico, String correoelectronico, String direccion) {
+    public Contactos(String nombre, int edad, String numerotelefonico, String correoelectronico, String direccion, String sexo) {
         this.nombre = nombre;
         this.edad = edad;
         this.numerotelefonico = numerotelefonico;
         this.correoelectronico = correoelectronico;
         this.direccion = direccion;
+        this.sexo = sexo;
     }
+    
 
     public Contactos() {
     }
@@ -71,6 +74,22 @@ public class Contactos implements Serializable{
         this.direccion = direccion;
     }
 
+    public ArrayList<Mensajes> getMensajes() {
+        return mensajes;
+    }
+
+    public void setMensajes(ArrayList<Mensajes> mensajes) {
+        this.mensajes = mensajes;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+    
     @Override
     public String toString() {
         return nombre;
