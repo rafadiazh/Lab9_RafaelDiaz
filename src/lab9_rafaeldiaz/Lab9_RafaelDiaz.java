@@ -5,6 +5,7 @@
  */
 package lab9_rafaeldiaz;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -68,7 +69,8 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         jLabel14 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        modcon = new javax.swing.JComboBox<>();
+        jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
@@ -243,6 +245,24 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
 
         jButton2.setText("Modificar");
 
+        modcon.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                modconItemStateChanged(evt);
+            }
+        });
+        modcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modconActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Cargar Contactos");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -277,12 +297,16 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
                                     .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                                     .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                                     .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(modcon, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(62, 62, 62))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(69, 69, 69)
-                .addComponent(jLabel14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton5))
+                    .addComponent(jLabel14))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -290,8 +314,10 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel14)
-                .addGap(7, 7, 7)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -312,7 +338,7 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jRadioButton3)
@@ -475,6 +501,8 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         DefaultTreeModel modelo = (DefaultTreeModel) Arbol.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
+        raiz.removeAllChildren();
+        modelo.reload();
         modelo = new DefaultTreeModel(raiz);
         AdminAgenda aa = new AdminAgenda("./contacto.cbm");
             aa.cargarArchivo();
@@ -514,13 +542,13 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         DefaultTreeModel modelo = (DefaultTreeModel) Arbol.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modelo.getRoot();
-        modelo = new DefaultTreeModel(raiz);
+        raiz.removeAllChildren();
+        modelo.reload();
         AdminAgenda aa = new AdminAgenda("./contacto.cbm");
             aa.cargarArchivo();
         for (int k = 0; k < aa.getContactos().size(); k++) {
             modelo = (DefaultTreeModel) Arbol.getModel();
             raiz = (DefaultMutableTreeNode) modelo.getRoot();
-            
             String sexo = aa.getContactos().get(k).getSexo();
             int centinela = 0;
             String nombre1=aa.getContactos().get(k).getNombre();
@@ -530,13 +558,12 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
             String direccion1 = aa.getContactos().get(k).getDireccion();
             String s = aa.getContactos().get(k).getSexo();
             for (int i = 0; i < raiz.getChildCount(); i++) {
-                if (raiz.getChildAt(i).toString().equals(edad1)) {
+                if (raiz.getChildAt(i).toString().equals(Integer.toString(edad1))) {
                     DefaultMutableTreeNode c = new DefaultMutableTreeNode(new Contactos(nombre1,edad1,numero1,correo1,direccion1, s));
                     ((DefaultMutableTreeNode)raiz.getChildAt(i)).add(c);
                     centinela=1;
                 }
             }
-            
             if (centinela==0) {
                 DefaultMutableTreeNode n = new DefaultMutableTreeNode(edad1);
                 DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Contactos(nombre1,edad1,numero1,correo1,direccion1, s));
@@ -544,11 +571,31 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
                 raiz.add(n);
             }
             modelo.reload();
-            
-        }
-        
-        
+        }  
     }//GEN-LAST:event_jButton4MouseClicked
+
+    private void modconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modconActionPerformed
+        
+        
+    }//GEN-LAST:event_modconActionPerformed
+
+    private void modconItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_modconItemStateChanged
+        
+        
+        
+    }//GEN-LAST:event_modconItemStateChanged
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        DefaultComboBoxModel modelo  = (DefaultComboBoxModel) modcon.getModel();
+        if (modelo.getSize()==0) {
+            
+        AdminAgenda aa = new AdminAgenda("./contacto.cbm");
+        aa.cargarArchivo();
+        for (int i = 0; i < aa.getContactos().size(); i++) {
+            modelo.addElement(aa.getContactos().get(i));
+        }
+        }
+    }//GEN-LAST:event_jButton5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -597,8 +644,8 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<Contactos> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -630,6 +677,7 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JRadioButton masculino;
+    private javax.swing.JComboBox<Contactos> modcon;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField numero;
     // End of variables declaration//GEN-END:variables
