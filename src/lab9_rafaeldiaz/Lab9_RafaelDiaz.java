@@ -5,6 +5,7 @@
  */
 package lab9_rafaeldiaz;
 
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -81,6 +82,12 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
         Arbol = new javax.swing.JTree();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        mensaje = new javax.swing.JTextArea();
+        men = new javax.swing.JComboBox<>();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -462,6 +469,62 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Agenda", jPanel4);
 
+        mensaje.setColumns(20);
+        mensaje.setRows(5);
+        jScrollPane4.setViewportView(mensaje);
+
+        jButton7.setText("Enviar Mensaje");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
+        });
+
+        jButton8.setText("Cargar Contactos");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGap(2, 2, 2)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(125, 125, 125)
+                                .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(182, 182, 182)
+                                .addComponent(jButton7))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(160, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton8)
+                .addGap(13, 13, 13)
+                .addComponent(men, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jButton7)
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Mensajes", jPanel5);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -680,6 +743,32 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton3MouseClicked
 
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+        DefaultComboBoxModel modelo  = (DefaultComboBoxModel) men.getModel();
+        modelo.removeAllElements();
+        if (modelo.getSize()==0) {
+            
+        AdminAgenda aa = new AdminAgenda("./contacto.cbm");
+        aa.cargarArchivo();
+        for (int i = 0; i < aa.getContactos().size(); i++) {
+            modelo.addElement(aa.getContactos().get(i));
+        }
+        }
+    }//GEN-LAST:event_jButton8MouseClicked
+
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        AdminAgenda aa = new AdminAgenda("./contacto.cbm");
+        aa.cargarArchivo();
+        DefaultComboBoxModel modelo  = (DefaultComboBoxModel) men.getModel();
+        String receptor=((Contactos)modelo.getSelectedItem()).getNombre();
+        Date fechaenvio=new Date();
+        String contenido=mensaje.getText();
+        ((Contactos)modelo.getSelectedItem()).getMensajes().add(new Mensajes(emisor,receptor,fechaenvio,contenido));
+        aa.escribirArchivo();
+        mensaje.setText("");
+        
+    }//GEN-LAST:event_jButton7MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -731,6 +820,8 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -750,19 +841,24 @@ public class Lab9_RafaelDiaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JRadioButton m;
     private javax.swing.JRadioButton masculino;
     private javax.swing.JTextField mcorreo;
     private javax.swing.JTextArea mdireccion;
     private javax.swing.JTextField medad;
+    private javax.swing.JComboBox<String> men;
+    private javax.swing.JTextArea mensaje;
     private javax.swing.JTextField mnombre;
     private javax.swing.JTextField mnumero;
     private javax.swing.JComboBox<Contactos> modcon;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField numero;
     // End of variables declaration//GEN-END:variables
+String emisor = "Juan Gomez";
 }
