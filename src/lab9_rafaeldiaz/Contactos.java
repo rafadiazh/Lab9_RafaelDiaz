@@ -29,6 +29,10 @@ public class Contactos implements Serializable{
         this.direccion = direccion;
         this.sexo = sexo;
     }
+
+    public static long getSerialVersionUID() {
+        return SerialVersionUID;
+    }
     
 
     public Contactos() {
